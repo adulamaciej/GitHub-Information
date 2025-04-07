@@ -1,4 +1,4 @@
-package org.example.atipera.client;
+package org.example.info.client;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,9 +7,9 @@ import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.atipera.exception.UserNotFoundException;
-import org.example.atipera.dto.BranchDto;
-import org.example.atipera.dto.RepositoryDto;
+import org.example.info.exception.UserNotFoundException;
+import org.example.info.dto.BranchDto;
+import org.example.info.dto.RepositoryDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;

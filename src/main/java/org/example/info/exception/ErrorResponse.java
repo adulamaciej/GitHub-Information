@@ -1,14 +1,13 @@
-package org.example.atipera.model;
+package org.example.info.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Owner {
-    private String login;
+public class ErrorResponse {
+    private int status;
+    private String message;
 }

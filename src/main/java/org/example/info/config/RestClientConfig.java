@@ -1,4 +1,4 @@
-package org.example.atipera.config;
+package org.example.info.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,15 +1,15 @@
-package org.example.atipera.model;
+package org.example.info.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.info.model.Owner;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Branch {
+public class RepositoryDto {
     private String name;
-    private Commit commit;
+    private Owner owner;
+    private boolean fork;
 }

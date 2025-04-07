@@ -1,9 +1,9 @@
-package org.example.atipera.dto;
+package org.example.info.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.atipera.model.Commit;
+import org.example.info.model.Commit;
 
 
 @Data

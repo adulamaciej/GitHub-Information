@@ -1,15 +1,15 @@
-package org.example.atipera.service;
+package org.example.info.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.atipera.client.GitHubClient;
-import org.example.atipera.model.Branch;
-import org.example.atipera.model.Commit;
-import org.example.atipera.model.Owner;
-import org.example.atipera.dto.BranchDto;
-import org.example.atipera.dto.RepositoryDto;
-import org.example.atipera.dto.RepositoryResponseDto;
+import org.example.info.client.GitHubClient;
+import org.example.info.model.Branch;
+import org.example.info.model.Commit;
+import org.example.info.model.Owner;
+import org.example.info.dto.BranchDto;
+import org.example.info.dto.RepositoryDto;
+import org.example.info.dto.RepositoryResponseDto;
 import org.springframework.stereotype.Service;
 
 @Slf4j

@@ -1,4 +1,4 @@
-package org.example.atipera.exception;
+package org.example.info.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,12 +1,12 @@
-package org.example.atipera.service;
+package org.example.info.service;
 
-import org.example.atipera.client.GitHubClient;
-import org.example.atipera.dto.RepositoryResponseDto;
+import org.example.info.client.GitHubClient;
+import org.example.info.dto.RepositoryResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
-import org.example.atipera.dto.RepositoryDto;
+import org.example.info.dto.RepositoryDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 

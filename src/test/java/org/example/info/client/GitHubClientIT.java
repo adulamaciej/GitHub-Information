@@ -1,9 +1,9 @@
-package org.example.atipera.client;
+package org.example.info.client;
 
 
-import org.example.atipera.dto.BranchDto;
-import org.example.atipera.dto.RepositoryDto;
-import org.example.atipera.exception.UserNotFoundException;
+import org.example.info.dto.BranchDto;
+import org.example.info.dto.RepositoryDto;
+import org.example.info.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

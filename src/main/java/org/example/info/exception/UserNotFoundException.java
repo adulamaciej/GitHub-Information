@@ -1,4 +1,4 @@
-package org.example.atipera.exception;
+package org.example.info.exception;
 
 
 public class UserNotFoundException extends RuntimeException {

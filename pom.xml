@@ -11,8 +11,8 @@
     <groupId>org.example</groupId>
     <artifactId>GitHubInfo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Atipera</name>
-    <description>Atipera</description>
+    <name>GitHubInformation</name>
+    <description>GitHubInformation</description>
     <url/>
     <licenses>
         <license/>

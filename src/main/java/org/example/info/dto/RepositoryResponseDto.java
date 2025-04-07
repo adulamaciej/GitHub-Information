@@ -1,12 +1,12 @@
-package org.example.atipera.dto;
+package org.example.info.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.atipera.model.Branch;
-import org.example.atipera.model.Owner;
+import org.example.info.model.Branch;
+import org.example.info.model.Owner;
 
 @Data
 @Builder

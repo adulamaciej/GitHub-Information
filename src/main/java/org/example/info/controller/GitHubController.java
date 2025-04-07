@@ -1,9 +1,9 @@
-package org.example.atipera.controller;
+package org.example.info.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.atipera.dto.RepositoryResponseDto;
-import org.example.atipera.service.GitHubService;
+import org.example.info.dto.RepositoryResponseDto;
+import org.example.info.service.GitHubService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

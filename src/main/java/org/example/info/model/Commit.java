@@ -1,4 +1,4 @@
-package org.example.atipera.model;
+package org.example.info.model;
 
 
 import lombok.AllArgsConstructor;

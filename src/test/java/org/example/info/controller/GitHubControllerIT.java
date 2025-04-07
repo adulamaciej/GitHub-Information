@@ -1,8 +1,8 @@
-package org.example.atipera.controller;
+package org.example.info.controller;
 
-import org.example.atipera.dto.RepositoryResponseDto;
-import org.example.atipera.exception.UserNotFoundException;
-import org.example.atipera.service.GitHubService;
+import org.example.info.dto.RepositoryResponseDto;
+import org.example.info.exception.UserNotFoundException;
+import org.example.info.service.GitHubService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
