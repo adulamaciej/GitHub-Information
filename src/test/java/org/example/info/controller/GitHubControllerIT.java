@@ -24,7 +24,7 @@ public class GitHubControllerIT {
     @Test
     public void shouldReturnRepositoriesForExistingUser() {
         // Given
-        String username = "octocat";
+        String username = "torvalds";
 
         // When
         ResponseEntity<List<RepositoryResponseDto>> response = gitHubController.getUserRepositories(username);
@@ -40,7 +40,7 @@ public class GitHubControllerIT {
     @Test
     public void shouldThrow404ForNonExistentUser() {
         // Given
-        String username = "this-user-definitely-does-not-exist-12345678900987654321";
+        String username = "thisuserdefinitelydoesnotexist12345678900987654321";
 
         // When & Then
         assertThrows(UserNotFoundException.class, () -> gitHubController.getUserRepositories(username));

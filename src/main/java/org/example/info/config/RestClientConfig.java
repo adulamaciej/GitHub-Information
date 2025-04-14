@@ -19,7 +19,7 @@ public class RestClientConfig {
         return RestClient.builder()
                 .baseUrl(githubApiUrl)
                 .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github.v3+json")
-                .defaultHeader(HttpHeaders.USER_AGENT, "Atipera-GitHub-Client")
+                .defaultHeader(HttpHeaders.USER_AGENT, "GitHub-Client-Information")
                 .messageConverters(converters -> converters.add(new MappingJackson2HttpMessageConverter()))
                 .build();
     }

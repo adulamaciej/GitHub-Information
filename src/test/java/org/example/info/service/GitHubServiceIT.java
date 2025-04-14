@@ -23,7 +23,7 @@ public class GitHubServiceIT {
     public void shouldRetrieveRepositoriesForExistingUser() {
 
         // Given
-        String username = "octocat";
+        String username = "torvalds";
 
         // When
         List<RepositoryResponseDto> repositories = gitHubService.getUserRepositories(username);
@@ -42,7 +42,7 @@ public class GitHubServiceIT {
     @Test
     public void shouldFilterOutForkRepositories() {
         // Given
-        String username = "octocat";
+        String username = "torvalds";
 
         // When
         List<RepositoryDto> repos = gitHubClient.getUserRepositories(username);
@@ -68,13 +68,13 @@ public class GitHubServiceIT {
     @Test
     public void shouldHandleUsernameWithSpaces() {
         // Given
-        String usernameWithSpaces = " octocat ";
+        String usernameWithSpaces = " torvalds ";
 
         // When
         List<RepositoryResponseDto> repositories = gitHubService.getUserRepositories(usernameWithSpaces.trim());
 
         // Then
         assertThat(repositories).isNotEmpty();
-        repositories.forEach(repo -> assertThat(repo.getOwner().getLogin()).isEqualTo("octocat"));
+        repositories.forEach(repo -> assertThat(repo.getOwner().getLogin()).isEqualTo("torvalds"));
     }
 }
