@@ -1,18 +1,17 @@
 package org.example.info.client;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.info.exception.RepositoryNotFoundException;
 import org.example.info.exception.UserNotFoundException;
-import org.example.info.dto.BranchDto;
-import org.example.info.dto.RepositoryDto;
+import org.example.info.dto.GitHubRepositoryInformation;
+import org.example.info.model.Branch;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
+
 
 @Slf4j
 @Component
@@ -21,43 +20,42 @@ public class GitHubClient {
 
     private final RestClient githubRestClient;
 
-    public List<RepositoryDto> getUserRepositories(String username) {
+    public Set<GitHubRepositoryInformation> getUserRepositories(String username) {
         log.debug("Fetching repositories for user: {}", username);
 
         try {
-            RepositoryDto[] repositories = githubRestClient.get()
+
+            return githubRestClient.get()
                     .uri("/users/{username}/repos", username)
                     .retrieve()
-                    .body(RepositoryDto[].class);
+                    .body(new ParameterizedTypeReference<LinkedHashSet<GitHubRepositoryInformation>>() {
+                    });
 
-            return Optional.ofNullable(repositories)
-                    .map(Arrays::asList)
-                    .orElse(Collections.emptyList());
         } catch (HttpClientErrorException.NotFound e) {
             log.error("User not found: {}", username, e);
             throw new UserNotFoundException("User not found: " + username);
-        } catch (Exception e) {
-            log.error("Error while fetching repositories for user: {}", username, e);
-            throw e;
+        } catch (HttpClientErrorException e) {
+            log.error("Error while fetching repositories for user {}: {}", username, e.getMessage());
+            throw new RuntimeException("Unexpected error occurred while fetching repositories");
         }
     }
 
+        public Set<Branch> getRepositoryBranches (String owner, String repo){
+            log.debug("Fetching branches for repository: {}/{}", owner, repo);
 
-    public List<BranchDto> getRepositoryBranches(String owner, String repo) {
-        log.debug("Fetching branches for repository: {}/{}", owner, repo);
+            try {
+                return githubRestClient.get()
+                        .uri("/repos/{owner}/{repo}/branches", owner, repo)
+                        .retrieve()
+                        .body(new ParameterizedTypeReference<LinkedHashSet<Branch>>() {
+                        });
 
-        try {
-            BranchDto[] branches = githubRestClient.get()
-                    .uri("/repos/{owner}/{repo}/branches", owner, repo)
-                    .retrieve()
-                    .body(BranchDto[].class);
-
-            return Optional.ofNullable(branches)
-                    .map(Arrays::asList)
-                    .orElse(Collections.emptyList());
-        } catch (Exception e) {
-            log.error("Error while fetching branches for repository: {}/{}", owner, repo, e);
-            return Collections.emptyList();
+            } catch (HttpClientErrorException.NotFound e) {
+                log.warn("Repository not found: {}/{}", owner, repo);
+                throw new RepositoryNotFoundException(" Repository not found: " + owner + "/" + repo);
+            } catch (HttpClientErrorException e) {
+                log.error("Error while fetching branches for repository {}/{}: {}", owner, repo, e.getMessage());
+                throw new RuntimeException("Unexpected error occurred while fetching branches");
+            }
         }
-    }
 }

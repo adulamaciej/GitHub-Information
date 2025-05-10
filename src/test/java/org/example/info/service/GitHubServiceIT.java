@@ -1,12 +1,13 @@
 package org.example.info.service;
 
 import org.example.info.client.GitHubClient;
-import org.example.info.dto.RepositoryResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.List;
-import org.example.info.dto.RepositoryDto;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.example.info.dto.GitHubRepositoryInformation;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -26,7 +27,7 @@ public class GitHubServiceIT {
         String username = "torvalds";
 
         // When
-        List<RepositoryResponseDto> repositories = gitHubService.getUserRepositories(username);
+        Set<GitHubRepositoryInformation> repositories = gitHubService.getUserRepositories(username);
 
         // Then
         assertThat(repositories).isNotEmpty();
@@ -45,18 +46,18 @@ public class GitHubServiceIT {
         String username = "torvalds";
 
         // When
-        List<RepositoryDto> repos = gitHubClient.getUserRepositories(username);
-        List<RepositoryResponseDto> filteredRepositories = gitHubService.getUserRepositories(username);
+        Set<GitHubRepositoryInformation> repos = gitHubClient.getUserRepositories(username);
+        Set<GitHubRepositoryInformation> filteredRepositories = gitHubService.getUserRepositories(username);
 
         // Then
-        List<String> forkNames = repos.stream()
-                .filter(RepositoryDto::isFork)
-                .map(RepositoryDto::getName)
-                .toList();
+        Set<String> forkNames = repos.stream()
+                .filter(GitHubRepositoryInformation::isFork)
+                .map(GitHubRepositoryInformation::getName)
+                .collect(Collectors.toSet());
 
-        List<String> filteredNames = filteredRepositories.stream()
-                .map(RepositoryResponseDto::getName)
-                .toList();
+        Set<String> filteredNames = filteredRepositories.stream()
+                .map(GitHubRepositoryInformation::getName)
+                .collect(Collectors.toSet());
 
         assertThat(forkNames).isNotEmpty();
 
@@ -71,7 +72,7 @@ public class GitHubServiceIT {
         String usernameWithSpaces = " torvalds ";
 
         // When
-        List<RepositoryResponseDto> repositories = gitHubService.getUserRepositories(usernameWithSpaces.trim());
+        Set<GitHubRepositoryInformation> repositories = gitHubService.getUserRepositories(usernameWithSpaces.trim());
 
         // Then
         assertThat(repositories).isNotEmpty();

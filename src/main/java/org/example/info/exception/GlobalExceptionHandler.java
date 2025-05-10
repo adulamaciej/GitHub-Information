@@ -19,6 +19,16 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(RepositoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleRepositoryNotFoundException(RepositoryNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse>  handleUnexpectedException(Exception ex) {
     ErrorResponse errorResponse = new ErrorResponse(

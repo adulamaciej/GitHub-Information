@@ -1,8 +1,8 @@
 package org.example.info.controller;
 
-import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.example.info.dto.RepositoryResponseDto;
+import org.example.info.dto.GitHubRepositoryInformation;
 import org.example.info.service.GitHubService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +18,8 @@ public class GitHubController {
     private final GitHubService githubService;
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<RepositoryResponseDto>> getUserRepositories(@PathVariable String username) {
-        List<RepositoryResponseDto> repositories = githubService.getUserRepositories(username);
+    public ResponseEntity<Set<GitHubRepositoryInformation>> getUserRepositories(@PathVariable String username) {
+        Set<GitHubRepositoryInformation> repositories = githubService.getUserRepositories(username);
         return ResponseEntity.ok(repositories);
     }
 }

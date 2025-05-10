@@ -1,13 +1,13 @@
 package org.example.info.client;
 
 
-import org.example.info.dto.BranchDto;
-import org.example.info.dto.RepositoryDto;
+import org.example.info.dto.GitHubRepositoryInformation;
 import org.example.info.exception.UserNotFoundException;
+import org.example.info.model.Branch;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,7 +26,7 @@ public class GitHubClientIT {
             String username = "torvalds";
 
             // When
-            List<RepositoryDto> repositories = gitHubClient.getUserRepositories(username);
+            Set<GitHubRepositoryInformation> repositories = gitHubClient.getUserRepositories(username);
 
             // Then
             assertThat(repositories).isNotEmpty();
@@ -45,7 +45,7 @@ public class GitHubClientIT {
             String repoName = "linux";
 
             // When
-            List<BranchDto> branches = gitHubClient.getRepositoryBranches(owner, repoName);
+            Set<Branch> branches = gitHubClient.getRepositoryBranches(owner, repoName);
 
             // Then
             assertThat(branches).isNotEmpty();

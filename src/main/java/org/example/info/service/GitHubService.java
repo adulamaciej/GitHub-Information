@@ -1,16 +1,16 @@
 package org.example.info.service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.info.client.GitHubClient;
 import org.example.info.model.Branch;
-import org.example.info.model.Commit;
 import org.example.info.model.Owner;
-import org.example.info.dto.BranchDto;
-import org.example.info.dto.RepositoryDto;
-import org.example.info.dto.RepositoryResponseDto;
+import org.example.info.dto.GitHubRepositoryInformation;
 import org.springframework.stereotype.Service;
+import java.util.LinkedHashSet;
 
 @Slf4j
 @Service
@@ -19,43 +19,37 @@ public class GitHubService {
 
     private final GitHubClient githubClient;
 
-    public List<RepositoryResponseDto> getUserRepositories(String username) {
+    public Set<GitHubRepositoryInformation> getUserRepositories(String username) {
         log.debug("Getting repositories for user: {}", username);
 
-        List<RepositoryDto> repositories = githubClient.getUserRepositories(username);
+        Set<GitHubRepositoryInformation> repositories = githubClient.getUserRepositories(username);
 
-        List<RepositoryResponseDto> result = repositories.stream()
+        Set<GitHubRepositoryInformation> result = repositories.stream()
                 .filter(repo -> !repo.isFork())
                 .map(this::mapToRepository)
-                .toList();
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
         log.debug("Returning {} non-fork repositories with branch details for user: {}", result.size(), username);
 
         return result;
     }
 
-    private RepositoryResponseDto mapToRepository(RepositoryDto gitHubRepo) {
-        String ownerLogin = gitHubRepo.getOwner().getLogin();
+
+    private GitHubRepositoryInformation mapToRepository(GitHubRepositoryInformation gitHubRepo) {
         String repoName = gitHubRepo.getName();
-        log.debug("Mapping repository: {}/{}", ownerLogin, repoName);
+        Owner owner = gitHubRepo.getOwner();
 
-        List<BranchDto> branches = githubClient.getRepositoryBranches(ownerLogin, repoName);
-        log.debug("Retrieved {} branches for repository: {}/{}", branches.size(), ownerLogin, repoName);
+        log.debug("Mapping repository: {}/{}", owner.getLogin(), repoName);
 
-        return RepositoryResponseDto.builder()
+        Set<Branch> branches = githubClient.getRepositoryBranches(owner.getLogin(), repoName);
+
+        log.debug("Retrieved {} branches for repository: {}/{}", branches.size(), owner.getLogin(), repoName);
+
+        return GitHubRepositoryInformation.builder()
                 .name(repoName)
-                .owner(Owner.builder().login(ownerLogin).build())
-                .branches(mapToBranches(branches))
+                .owner(owner)
+                .branches(branches)
                 .build();
     }
 
-    private List<Branch> mapToBranches(List<BranchDto> branchDtos) {
-        log.debug("Mapping {} branches to response model", branchDtos.size());
-
-        return branchDtos.stream()
-                .map(branch -> Branch.builder()
-                        .name(branch.getName())
-                        .commit(Commit.builder().sha(branch.getCommit().getSha()).build())
-                        .build())
-                .toList();
-    }
 }
